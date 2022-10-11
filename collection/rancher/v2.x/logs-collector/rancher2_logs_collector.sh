@@ -404,6 +404,7 @@ rke-k8s() {
   docker exec kubelet kubectl get endpoints -o wide --all-namespaces --kubeconfig=$KUBECONFIG > $TMPDIR/k8s/kubectl/endpoints 2>&1
   docker exec kubelet kubectl get configmaps --all-namespaces --kubeconfig=$KUBECONFIG > $TMPDIR/k8s/kubectl/configmaps 2>&1
   docker exec kubelet kubectl get namespaces --kubeconfig=$KUBECONFIG > $TMPDIR/k8s/kubectl/namespaces 2>&1
+  docker exec kubelet kubectl get clusters -o wide --all-namespaces --kubeconfig=$KUBECONFIG > $TMPDIR/k8s/kubectl/clusters 2>&1
 
   techo "Collecting nginx-proxy info"
   if docker inspect nginx-proxy >/dev/null 2>&1; then
@@ -424,6 +425,7 @@ k3s-k8s() {
     k3s kubectl --kubeconfig=$KUBECONFIG version > $TMPDIR/k3s/kubectl/version 2>&1
     k3s kubectl --kubeconfig=$KUBECONFIG get pods -o wide --all-namespaces > $TMPDIR/k3s/kubectl/pods 2>&1
     k3s kubectl --kubeconfig=$KUBECONFIG get svc -o wide --all-namespaces > $TMPDIR/k3s/kubectl/services 2>&1
+    k3s kubectl --kubeconfig=$KUBECONFIG get clusters -o wide --all-namespaces  > $TMPDIR/k3s/kubectl/clusters 2>&1
   fi
 
   if [ -d /var/lib/rancher/k3s/server ]; then
@@ -469,6 +471,7 @@ rke2-k8s() {
     ${RKE2_DIR}/bin/kubectl --kubeconfig=$KUBECONFIG version > $TMPDIR/rke2/kubectl/version 2>&1
     ${RKE2_DIR}/bin/kubectl --kubeconfig=$KUBECONFIG get pods -o wide --all-namespaces > $TMPDIR/rke2/kubectl/pods 2>&1
     ${RKE2_DIR}/bin/kubectl --kubeconfig=$KUBECONFIG get svc -o wide --all-namespaces > $TMPDIR/rke2/kubectl/services 2>&1
+    ${RKE2_DIR}/bin/kubectl --kubeconfig=$KUBECONFIG get clusters -o wide --all-namespaces  > $TMPDIR/rke2/kubectl/clusters 2>&1
   fi
 
   if [ -f /etc/rancher/rke2/rke2.yaml ]; then
