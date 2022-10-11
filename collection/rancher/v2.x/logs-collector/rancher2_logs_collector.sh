@@ -425,14 +425,13 @@ k3s-k8s() {
     k3s kubectl --kubeconfig=$KUBECONFIG version > $TMPDIR/k3s/kubectl/version 2>&1
     k3s kubectl --kubeconfig=$KUBECONFIG get pods -o wide --all-namespaces > $TMPDIR/k3s/kubectl/pods 2>&1
     k3s kubectl --kubeconfig=$KUBECONFIG get svc -o wide --all-namespaces > $TMPDIR/k3s/kubectl/services 2>&1
-    k3s kubectl --kubeconfig=$KUBECONFIG get clusters -o wide --all-namespaces  > $TMPDIR/k3s/kubectl/clusters 2>&1
   fi
 
   if [ -d /var/lib/rancher/k3s/server ]; then
     unset KUBECONFIG
     kubectl api-resources > $TMPDIR/k3s/kubectl/api-resources 2>&1
     K3S_OBJECTS=(clusterroles clusterrolebindings crds mutatingwebhookconfigurations namespaces nodes pv validatingwebhookconfigurations)
-    K3S_OBJECTS_NAMESPACED=(apiservices configmaps cronjobs deployments daemonsets endpoints events helmcharts hpa ingress jobs leases pods pvc replicasets roles rolebindings statefulsets)
+    K3S_OBJECTS_NAMESPACED=(apiservices clusters configmaps cronjobs deployments daemonsets endpoints events helmcharts hpa ingress jobs leases pods pvc replicasets roles rolebindings statefulsets)
     for OBJECT in "${K3S_OBJECTS[@]}"; do
       k3s kubectl get ${OBJECT} -o wide > $TMPDIR/k3s/kubectl/${OBJECT} 2>&1
     done
