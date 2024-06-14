@@ -1,4 +1,4 @@
-# Rancher v2.x profiles-collector
+# Rancher v2.x profile-collector
 
 ## Notes
 
